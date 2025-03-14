@@ -143,7 +143,7 @@ export default function Home() {
         <footer className={`w-full py-8 mt-auto text-center ${theme === "dark" ? "bg-slate-900" : "bg-gray-50"
           }`}>
           <div className="flex justify-center gap-6 mb-4">
-            <Link href="https://www.linkedin.com/in/aishwaryshah" target="_blank">
+            <Link href="https://www.linkedin.com/in/aishwary-shah-web-developer/" target="_blank">
               <motion.div
                 whileHover={{ scale: 1.2 }}
                 className="text-blue-500 hover:text-blue-400 transition-transform"
@@ -151,7 +151,7 @@ export default function Home() {
                 <FaLinkedin size={30} />
               </motion.div>
             </Link>
-            <Link href="https://github.com/aishwaryshah" target="_blank">
+            <Link href="https://github.com/aishwary11" target="_blank">
               <motion.div
                 whileHover={{ scale: 1.2 }}
                 className={`transition-transform ${theme === "dark"
