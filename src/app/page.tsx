@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { createContext, useEffect, useState } from "react";
-import { FaGithub, FaLinkedin, FaMoon, FaSun } from "react-icons/fa";
+import { FaEnvelopeOpen, FaGithub, FaLinkedin, FaMobile, FaMoon, FaSun } from "react-icons/fa";
 
 const ThemeContext = createContext<{
   theme: string;
@@ -140,7 +140,7 @@ export default function Home() {
         </motion.div>
 
         {/* Footer */}
-        <footer className={`w-full py-8 mt-auto text-center ${theme === "dark" ? "bg-slate-900" : "bg-gray-50"
+        <footer className={`w-full py-8 mt-auto text-center flex flex-col items-center ${theme === "dark" ? "bg-slate-900" : "bg-gray-50"
           }`}>
           <div className="flex justify-center gap-6 mb-4">
             <Link href="https://www.linkedin.com/in/aishwary-shah-web-developer/" target="_blank">
@@ -163,11 +163,35 @@ export default function Home() {
               </motion.div>
             </Link>
           </div>
-          <p className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>
+          <div className="flex flex-col items-center gap-4">
+            <div className="group relative">
+              <div className="flex items-center justify-center gap-2">
+                <FaMobile size={16} className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"}`} />
+                <span className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+                  +91-8591693650
+                </span>
+              </div>
+              <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                Mobile
+              </span>
+            </div>
+            <div className="group relative">
+              <div className="flex items-center justify-center gap-2">
+                <FaEnvelopeOpen size={16} className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"}`} />
+                <span className={`${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+                  aishwary46@gmail.com
+                </span>
+              </div>
+              <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                Email
+              </span>
+            </div>
+          </div>
+          <p className={`mt-4 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
             &copy; {new Date().getFullYear()} Aishwary Shah. All rights reserved.
           </p>
         </footer>
-      </div>
-    </ThemeContext.Provider>
+      </div >
+    </ThemeContext.Provider >
   );
 }
