@@ -5,11 +5,8 @@ import { useEffect, useState } from 'react';
 type SetValue<T> = (value: T | ((val: T) => T)) => void;
 
 export function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
-  // Initialize with initialValue to ensure server and client render the same on first render
   const [storedValue, setStoredValue] = useState<T>(initialValue);
   const [isInitialized, setIsInitialized] = useState(false);
-
-  // Read from localStorage only on client after mount
   useEffect(() => {
     try {
       const item = globalThis.window.localStorage.getItem(key);
@@ -23,7 +20,6 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T
     }
   }, [key]);
 
-  // Update localStorage whenever storedValue changes (but skip initial render)
   useEffect(() => {
     if (!isInitialized) return;
 
