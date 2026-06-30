@@ -1,6 +1,7 @@
 'use client';
 
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import {
   AnimatePresence,
   motion,
@@ -594,6 +595,7 @@ export default function Home() {
 
   return (
     <>
+      <SpeedInsights />
       <ScrollBar />
       <div suppressHydrationWarning className="min-h-screen w-full font-sans bg-white dark:bg-[#030308] text-slate-900 dark:text-white transition-colors duration-500">
         <Nav isDark={isDark} toggle={toggle} pending={pending} />
