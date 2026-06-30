@@ -60,7 +60,7 @@ const calcExp = (d: Date): string => {
   let y = now.getFullYear() - d.getFullYear();
   let m = now.getMonth() - d.getMonth() + (now.getDate() < d.getDate() ? -1 : 0);
   if (m < 0) { y--; m += 12; }
-  return y + ' year' + (y !== 1 ? 's' : '') + ' and ' + m + ' month' + (m !== 1 ? 's' : '');
+  return y + ' year' + (y === 1 ? '' : 's') + ' and ' + m + ' month' + (m === 1 ? '' : 's');
 };
 
 const STATS = [
@@ -224,18 +224,18 @@ const scaleIn: Variants = {
 
 // ── Hooks ─────────────────────────────────────────────────────────────
 function useTyping(words: readonly string[], speed = 80, del = 42, pause = 2400): string {
-  const [s, set] = useState({ t: '', wi: 0, del: false });
+  const [s, setS] = useState({ t: '', wi: 0, del: false });
   useEffect(() => {
     const w = words[s.wi % words.length];
     const isFull = s.t === w;
     const isEmpty = s.t === '';
     if (!s.del && isFull) {
-      const id = setTimeout(() => set(x => ({ ...x, del: true })), pause);
+      const id = setTimeout(() => setS(x => ({ ...x, del: true })), pause);
       return () => clearTimeout(id);
     }
-    if (s.del && isEmpty) { set(x => ({ ...x, del: false, wi: x.wi + 1 })); return; }
+    if (s.del && isEmpty) { setS(x => ({ ...x, del: false, wi: x.wi + 1 })); return; }
     const id = setTimeout(
-      () => set(x => ({ ...x, t: s.del ? w.slice(0, x.t.length - 1) : w.slice(0, x.t.length + 1) })),
+      () => setS(x => ({ ...x, t: s.del ? w.slice(0, x.t.length - 1) : w.slice(0, x.t.length + 1) })),
       s.del ? del : speed,
     );
     return () => clearTimeout(id);
@@ -263,7 +263,7 @@ function Orbs() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
       {orbs.map((o, i) => (
-        <motion.div key={i} className="absolute rounded-full opacity-20 dark:opacity-[0.07]"
+        <motion.div key={i + 1} className="absolute rounded-full opacity-20 dark:opacity-[0.07]"
           style={{ background: o.g, width: o.s, height: o.s, left: o.l, top: o.t, filter: 'blur(70px)' }}
           animate={{ x: o.x, y: o.y, scale: [1, 1.1, 0.94, 1] }}
           transition={{ duration: o.d, repeat: Infinity, ease: 'easeInOut' }} />
@@ -289,7 +289,7 @@ function ScrollBar() {
   return <motion.div className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 z-50 origin-left" style={{ scaleX }} />;
 }
 
-function Nav({ isDark, toggle, pending }: { isDark: boolean; toggle: () => void; pending: boolean; }) {
+function Nav({ isDark, toggle, pending }: Readonly<{ isDark: boolean; toggle: () => void; pending: boolean; }>) {
   const scrolled = useScrolled();
   return (
     <motion.nav initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -318,7 +318,7 @@ function Nav({ isDark, toggle, pending }: { isDark: boolean; toggle: () => void;
 
 const ROLES = ['Senior Software Developer', 'Tech Lead', 'PERN / MERN Architect', 'Cloud & DevOps Engineer'] as const;
 
-function Hero({ exp }: { exp: string; }) {
+function Hero({ exp }: Readonly<{ exp: string; }>) {
   const typed = useTyping(ROLES);
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
@@ -326,14 +326,16 @@ function Hero({ exp }: { exp: string; }) {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
         <motion.div initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="mb-7">
           <span className="inline-flex items-center gap-2 text-xs font-mono px-3.5 py-1.5 rounded-full bg-indigo-500/10 dark:bg-indigo-500/15 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400">
-            <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" /><span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" /></span>
-            Open to senior engineering roles
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
+            </span>
+            <span>Open to senior engineering roles</span>
           </span>
         </motion.div>
         <motion.h1 initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-[90px] font-extrabold tracking-tight leading-none mb-5">
-          <span className="text-slate-900 dark:text-white">Aishwary</span>{' '}
-          <span className="text-transparent bg-clip-text animate-gradient-shift" style={{ backgroundImage: 'linear-gradient(135deg,#6366f1,#8b5cf6,#06b6d4,#6366f1)' }}>Shah</span>
+          <span className="text-slate-900 dark:text-white">Aishwary</span> <span className="text-transparent bg-clip-text animate-gradient-shift" style={{ backgroundImage: 'linear-gradient(135deg,#6366f1,#8b5cf6,#06b6d4,#6366f1)' }}>Shah</span>
         </motion.h1>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.38 }} className="h-10 flex items-center justify-center mb-7">
           <p className="text-xl sm:text-2xl font-medium text-slate-500 dark:text-slate-400 font-mono">
@@ -434,10 +436,10 @@ function Skills() {
                 <h3 className="font-semibold text-slate-800 dark:text-slate-200 text-sm">{category}</h3>
               </div>
               <div className="flex flex-wrap gap-2">
-                {items.map(({ name, icon: SI, color }) => (
+                {items.map(({ name, icon: SkillIcon, color }) => (
                   <motion.span key={name} whileHover={{ scale: 1.06, y: -1 }}
                     className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-50 dark:bg-slate-700/35 border border-slate-200/80 dark:border-slate-600/25 text-slate-700 dark:text-slate-300 text-xs font-medium hover:border-indigo-500/30 transition-all cursor-default select-none">
-                    {SI ? <SI size={11} style={{ color }} /> : <span className="inline-block w-2 h-2 rounded-full shrink-0" style={{ background: color }} />}
+                    {SkillIcon ? <SkillIcon size={11} style={{ color }} /> : <span className="inline-block w-2 h-2 rounded-full shrink-0" style={{ background: color }} />}
                     {name}
                   </motion.span>
                 ))}
