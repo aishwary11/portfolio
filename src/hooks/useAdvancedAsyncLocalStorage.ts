@@ -47,30 +47,35 @@ export function useAdvancedAsyncLocalStorage<T>(
   const [lastSync, setLastSync] = useState(0);
   const [error, setError] = useState<Error>();
 
+  const parseStoredItem = useCallback(
+    (item: string): T | undefined => {
+      try {
+        const parsed = JSON.parse(item) as T;
+        if (validateFn && !validateFn(parsed)) return undefined;
+        return transformFn ? (transformFn(parsed) as T) : parsed;
+      } catch (parseError) {
+        console.warn(`Error parsing localStorage key "${key}":`, parseError);
+        return undefined;
+      }
+    },
+    [key, validateFn, transformFn],
+  );
+
   // Initialize from localStorage
   useEffect(() => {
     const initializeStorage = async () => {
       try {
-        if (typeof window === 'undefined') return;
+        if (globalThis.window === undefined) return;
 
         const item = localStorage.getItem(key);
         let value: T | undefined;
 
         if (item) {
-          try {
-            const parsed = JSON.parse(item) as T;
-            value = validateFn ? (validateFn(parsed) ? parsed : undefined) : parsed;
+          value = parseStoredItem(item);
 
-            if (value && transformFn) {
-              value = transformFn(value) as T;
-            }
-
-            if (value) {
-              setStoredValue(value);
-              cacheRef.current = { value, timestamp: Date.now(), version: 1 };
-            }
-          } catch (parseError) {
-            console.warn(`Error parsing localStorage key "${key}":`, parseError);
+          if (value) {
+            setStoredValue(value);
+            cacheRef.current = { value, timestamp: Date.now(), version: 1 };
           }
         }
 
@@ -88,11 +93,11 @@ export function useAdvancedAsyncLocalStorage<T>(
     };
 
     initializeStorage();
-  }, [key, fallbackValue, validateFn, transformFn, onError]);
+  }, [fallbackValue, key, onError, parseStoredItem]);
 
   // Debounced write to localStorage
   useEffect(() => {
-    if (!isInitialized || typeof window === 'undefined') return;
+    if (!isInitialized || globalThis.window === undefined) return;
 
     // Clear existing timer
     if (debounceTimerRef.current) {

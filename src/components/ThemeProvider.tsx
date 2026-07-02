@@ -1,7 +1,7 @@
 'use client';
 
 import { useAdvancedAsyncLocalStorage } from '@/hooks/useAdvancedAsyncLocalStorage';
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -69,9 +69,9 @@ export function ThemeProvider({
 
   // Detect system theme preference
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (globalThis.window === undefined) return;
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = globalThis.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
       setSystemTheme(e.matches ? 'dark' : 'light');
     };
@@ -97,7 +97,7 @@ export function ThemeProvider({
     htmlElement.classList.add('transition-colors');
     htmlElement.classList.remove('dark', 'light');
     htmlElement.classList.add(theme);
-    htmlElement.setAttribute('data-theme', theme);
+    htmlElement.dataset.theme = theme;
 
     // Remove transition class after animation
     const timer = setTimeout(() => {
@@ -115,7 +115,7 @@ export function ThemeProvider({
     console.error('Theme context error:', error);
   }
 
-  const value: ThemeContextType = {
+  const value = useMemo<ThemeContextType>(() => ({
     theme,
     toggleTheme,
     isLoading,
@@ -123,7 +123,7 @@ export function ThemeProvider({
     lastSync,
     systemTheme,
     setSystemTheme,
-  };
+  }), [theme, toggleTheme, isLoading, isDirty, lastSync, systemTheme, setSystemTheme]);
 
   return (
     <ThemeContext.Provider value={value}>

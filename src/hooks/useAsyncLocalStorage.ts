@@ -23,7 +23,7 @@ export function useAsyncLocalStorage<T>(
   useEffect(() => {
     const initializeStorage = async () => {
       try {
-        if (typeof window === 'undefined') return;
+        if (globalThis.window === undefined) return;
 
         const item = localStorage.getItem(key);
         if (item) {
@@ -45,7 +45,7 @@ export function useAsyncLocalStorage<T>(
 
   // Debounced write to localStorage
   useEffect(() => {
-    if (!isInitialized || typeof window === 'undefined') return;
+    if (!isInitialized || globalThis.window === undefined) return;
 
     // Clear existing timer
     if (debounceTimerRef.current) {

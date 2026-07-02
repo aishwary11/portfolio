@@ -1,6 +1,6 @@
 'use server';
 
-import { AsyncLocalStorage } from 'async_hooks';
+import { AsyncLocalStorage } from 'node:async_hooks';
 
 /**
  * Advanced AsyncLocalStorage with encryption, compression, and versioning
@@ -39,13 +39,6 @@ const encodeData = (data: string): string => {
   }
 };
 
-const decodeData = (data: string): string => {
-  try {
-    return Buffer.from(data, 'base64').toString('utf-8');
-  } catch {
-    return data;
-  }
-};
 
 /**
  * Simple compression using JSON stringification
@@ -58,13 +51,6 @@ const compressData = (data: unknown): string => {
   }
 };
 
-const decompressData = (data: string): unknown => {
-  try {
-    return JSON.parse(data);
-  } catch {
-    return data;
-  }
-};
 
 export const createAdvancedAsyncLocalStorage = (config: StorageConfig = {}) => {
   const {

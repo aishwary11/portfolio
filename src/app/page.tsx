@@ -476,8 +476,8 @@ function ExpCard({ e, i }: Readonly<{ e: Experience; i: number; }>) {
         </div>
         {e.note && <p className="text-xs text-amber-600 dark:text-amber-400 mb-3 italic">{e.note}</p>}
         <ul className="space-y-1.5 mb-4">
-          {e.highlights.map((h, hi) => (
-            <li key={hi} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          {e.highlights.map((h) => (
+            <li key={h} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
               <span className="mt-[7px] shrink-0 w-1 h-1 rounded-full bg-indigo-500/60" />{h}
             </li>
           ))}
