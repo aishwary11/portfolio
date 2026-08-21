@@ -1,25 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
-  <!-- Background gradient -->
   <defs>
-    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1" />
+    <linearGradient id="mark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="55%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#22D3EE" />
     </linearGradient>
-    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.15"/>
-    </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="192" height="192" rx="40" fill="url(#grad1)" filter="url(#shadow)"/>
+  <rect width="192" height="192" rx="44" fill="url(#mark)" />
 
-  <!-- Code brackets -->
-  <g transform="translate(48, 48)" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <!-- Left bracket -->
-    <path d="M 20 10 L 10 30 L 20 50" />
-    <!-- Right bracket -->
-    <path d="M 76 10 L 86 30 L 76 50" />
-    <!-- Center dot -->
-    <circle cx="48" cy="30" r="4" fill="white" />
+  <!-- Initial, drawn as strokes so it stays legible at 16px and rasterizes
+       without depending on a font being available. -->
+  <g stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M 60 141 L 96 51 L 132 141" />
+    <path d="M 74 111 L 118 111" />
   </g>
 </svg>

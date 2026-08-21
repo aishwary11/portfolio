@@ -1,209 +1,576 @@
-@import "tailwindcss";
-
-@plugin "tailwindcss-animate";
+@import 'tailwindcss';
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── Base ─────────────────────────────────────────────────────── */
-html
-{
+/* ─────────────────────────────────────────────────────────────────────────
+   Design tokens
+
+   Two accents carry the identity (indigo → violet); cyan is reserved for data
+   emphasis and emerald for live status. Nothing outside this list should show
+   up in a component — that constraint is what keeps the page coherent.
+   ───────────────────────────────────────────────────────────────────────── */
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-indigo-accent: #6366f1;
+  --color-violet-accent: #8b5cf6;
+  --color-cyan-accent: #22d3ee;
+  --color-emerald-accent: #10b981;
+
+  --color-ink: #05060a;
+  --color-ink-raised: #0b0d14;
+}
+
+/* Typed so it can be interpolated — untyped custom properties animate as
+   discrete strings and would snap rather than sweep. */
+@property --sheen-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 110deg;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Lets `height`/`grid-template-rows` transition to and from `auto`, which is
+     what makes the disclosure animations below work without measuring in JS. */
+  interpolate-size: allow-keywords;
+}
+
+html {
   scroll-behavior: smooth;
+  /* `color-scheme` is the switch `light-dark()` reads from, so setting it here
+     means the component layer needs no `dark:` variants at all. */
   color-scheme: light;
   background-color: #ffffff;
+  -webkit-text-size-adjust: 100%;
 }
 
-html.dark
-{
+html.dark {
   color-scheme: dark;
-  background-color: #030308;
+  background-color: var(--color-ink);
 }
 
-section[id]
-{
-  scroll-margin-top: 4rem;
+body {
+  background-color: light-dark(#ffffff, var(--color-ink));
+  color: light-dark(var(--color-slate-900), var(--color-slate-100));
+  font-synthesis-weight: none;
 }
 
-::selection
-{
-  background-color: oklch(0.6 0.24 270 / 0.28);
+/* Headings read better balanced; body copy reads better with orphans avoided. */
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
 }
 
-/* ── Scrollbar ───────────────────────────────────────────────── */
-::-webkit-scrollbar
-{
-  width: 5px;
+p,
+li {
+  text-wrap: pretty;
 }
 
-::-webkit-scrollbar-track
-{
+/* Clears the fixed navbar when jumping to an anchor. */
+:target,
+[id] {
+  scroll-margin-top: 6rem;
+}
+
+::selection {
+  background-color: color-mix(in oklab, var(--color-indigo-accent) 30%, transparent);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb
-{
-  background: oklch(0.52 0.2 270);
-  border-radius: 4px;
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-indigo-accent) 55%, transparent);
+  border-radius: 999px;
 }
 
-::-webkit-scrollbar-thumb:hover
-{
-  background: oklch(0.62 0.25 270);
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-indigo-accent);
 }
 
-/* ── Keyframes ───────────────────────────────────────────────── */
-@keyframes gradient-shift
-{
+/* Keyboard focus stays visible everywhere, including inside cards. */
+:focus-visible {
+  outline: 2px solid var(--color-indigo-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Surfaces
+
+   Declared once so every card shares one border, radius and hover treatment.
+   Each card previously repeated a bespoke class list, which is how they drifted
+   out of sync in the first place.
+   ───────────────────────────────────────────────────────────────────────── */
+@layer components {
+  .surface {
+    border: 1px solid light-dark(var(--color-slate-200), rgb(255 255 255 / 0.08));
+    background-color: light-dark(#ffffff, rgb(255 255 255 / 0.02));
+    border-radius: 1rem;
+  }
+
+  .surface-interactive {
+    border: 1px solid light-dark(var(--color-slate-200), rgb(255 255 255 / 0.08));
+    background-color: light-dark(#ffffff, rgb(255 255 255 / 0.02));
+    border-radius: 1rem;
+    transition:
+      border-color 200ms ease,
+      background-color 200ms ease;
+  }
+
+  .surface-interactive:hover,
+  /* Keeps the card lit while anything inside it holds keyboard focus. */
+  .surface-interactive:has(:focus-visible) {
+    border-color: light-dark(
+      color-mix(in oklab, var(--color-indigo-accent) 45%, transparent),
+      color-mix(in oklab, var(--color-indigo-accent) 35%, transparent)
+    );
+    background-color: light-dark(var(--color-slate-50), rgb(255 255 255 / 0.04));
+  }
+
+  /* Mono label naming a section. Mono is the page's data voice throughout:
+     periods, locations, counts and labels are mono; prose is never mono. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: light-dark(var(--color-slate-500), var(--color-slate-400));
+  }
+
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    color: light-dark(var(--color-slate-500), var(--color-slate-400));
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid light-dark(var(--color-slate-200), rgb(255 255 255 / 0.08));
+    background-color: light-dark(var(--color-slate-50), rgb(255 255 255 / 0.03));
+    color: light-dark(var(--color-slate-700), var(--color-slate-300));
+    border-radius: 0.375rem;
+    padding: 0.125rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.5;
+  }
+
+  /* The one gradient on the page, spent on the surname in the hero. */
+  .accent-text {
+    background-image: linear-gradient(
+      var(--sheen-angle),
+      var(--color-indigo-accent),
+      var(--color-violet-accent) 52%,
+      var(--color-cyan-accent)
+    );
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hairline {
+    border-color: light-dark(var(--color-slate-200), rgb(255 255 255 / 0.08));
+  }
+
+  /* ───────────────────────────────────────────────────────────────────────
+     Pointer targets
+
+     WCAG 2.5.8 asks for at least 44×44 CSS px. Icon-only controls just grow to
+     that size. Text links cannot — a 44px-tall inline link would wreck the
+     rhythm — so they keep their visual size and gain an invisible expander
+     instead. Declared here rather than per component so no control can be
+     added later that quietly misses the floor.
+     ─────────────────────────────────────────────────────────────────────── */
+  .tap {
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+  }
+
+  .tap-area {
+    position: relative;
+  }
+
+  .tap-area::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    block-size: max(100%, 2.75rem);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Scroll-driven animation
+
+   The reveal, the progress bar and the navbar's scrolled state are all driven
+   by native scroll timelines. No observers, no scroll listeners, no client
+   components — and because the animations are declarative, the sections that
+   use them stay Server Components.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Content is visible by default; the animation only ever takes it away and
+   gives it back. A browser without scroll timelines shows a static page. */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes progress-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes navbar-settle {
+  to {
+    background-color: light-dark(rgb(255 255 255 / 0.85), rgb(5 6 10 / 0.85));
+    border-bottom-color: light-dark(var(--color-slate-200), rgb(255 255 255 / 0.08));
+    backdrop-filter: blur(14px);
+  }
+}
+
+@keyframes ambient-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(0, -4%, 0) scale(1.08);
+  }
+}
+
+/* Hard on/off, like a terminal caret — a fade would read as a glow. */
+@keyframes caret-blink {
   0%,
-  100%
-  {
-    background-position: 0% 50%;
+  49% {
+    opacity: 1;
   }
-
-  50%
-  {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes ping-slow
-{
-
-  75%,
-  100%
-  {
-    transform: scale(2);
+  50%,
+  100% {
     opacity: 0;
   }
 }
 
-.animate-gradient-shift
-{
-  animation: gradient-shift 5s ease-in-out infinite;
-  background-size: 200% 200%;
+.scroll-progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 60;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background-image: linear-gradient(
+    90deg,
+    var(--color-indigo-accent),
+    var(--color-violet-accent),
+    var(--color-cyan-accent)
+  );
 }
 
-@theme inline
-{
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+.site-nav {
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
 }
 
-:root
-{
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark
-{
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
-@layer base
-{
-  *
-  {
-    @apply border-border outline-ring/50;
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: progress-grow linear both;
+    animation-timeline: scroll(root block);
   }
 
-  body
-  {
-    @apply bg-background text-foreground;
+  .site-nav {
+    animation: navbar-settle linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 96px;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      /* Completes well before the element is fully in view, so an element that
+         cannot scroll any further — the last one on the page — still finishes. */
+      animation-range: entry 0% entry 55%;
+    }
+
+    /* Staggers children by their position without a single inline style. The
+       probe keeps this out of browsers that do not support the function. */
+    @supports (margin: calc(sibling-index() * 1px)) {
+      .stagger > .reveal {
+        animation-range: entry calc(sibling-index() * 5%) entry calc(55% + sibling-index() * 5%);
+      }
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Ambient background
+
+   One slow wash rather than several pulsing orbs. Decorative, so it is the
+   first thing to go when the user has asked for less.
+   ───────────────────────────────────────────────────────────────────────── */
+.ambient-wash {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ambient-wash {
+    animation: ambient-drift 22s ease-in-out infinite alternate;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Event log — the signature element
+
+   The career reads as an append-only log: a mono timestamp in the gutter, a
+   connecting spine, and the role as the entry. Order carries real information
+   here (progression), which is what earns the structural device.
+   ───────────────────────────────────────────────────────────────────────── */
+.log-entry {
+  position: relative;
+}
+
+/* The spine, drawn between markers rather than through them. */
+.log-entry:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  inset-block: 1.75rem -2.5rem;
+  inset-inline-start: 0.3125rem;
+  width: 1px;
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--color-indigo-accent) 40%, transparent),
+    transparent
+  );
+}
+
+.log-marker {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  inline-size: 0.6875rem;
+  block-size: 0.6875rem;
+  margin-block-start: 0.4375rem;
+  border-radius: 50%;
+  border: 2px solid light-dark(#ffffff, var(--color-ink));
+  background-color: color-mix(in oklab, var(--color-indigo-accent) 60%, transparent);
+  transition: background-color 200ms ease;
+}
+
+/* Only the most recent entry is live, so only it gets the emerald ring. */
+.log-entry:first-child .log-marker {
+  background-color: var(--color-indigo-accent);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-indigo-accent) 18%, transparent);
+}
+
+.log-entry:hover .log-marker {
+  background-color: var(--color-violet-accent);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Marked lists
+
+   A text glyph makes a bad bullet: `▸` and `•` sit on the baseline with a
+   different offset in every font, so any hand-tuned `margin-top` is only
+   correct for one type size. These draw the mark instead, inside a box exactly
+   one line tall — `1lh` — so it centres on the first line at any size and stays
+   centred when the type scale moves.
+   ───────────────────────────────────────────────────────────────────────── */
+.mark-list > li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: 0.625rem;
+}
+
+.mark-list > li::before {
+  content: '';
+  block-size: 1lh;
+  background-color: currentColor;
+}
+
+/* Architectural themes: a directional mark, because each one leads somewhere. */
+.mark-list-spec > li::before {
+  inline-size: 0.375rem;
+  color: var(--color-indigo-accent);
+  clip-path: polygon(0 calc(50% - 0.1875rem), 100% 50%, 0 calc(50% + 0.1875rem));
+}
+
+/* Verbatim resume lines: a neutral dot, since these are peers, not a sequence. */
+.mark-list-note > li::before {
+  inline-size: 0.25rem;
+  color: light-dark(var(--color-slate-400), var(--color-slate-600));
+  clip-path: circle(0.125rem at 50% 50%);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Disclosure
+
+   Native `<details>`, animated through `::details-content`. Combined with the
+   `interpolate-size` declaration above, the panel grows from nothing to its
+   natural height with no wrapper element and no measuring in JavaScript — and
+   keeps the platform's built-in semantics and keyboard handling.
+   ───────────────────────────────────────────────────────────────────────── */
+summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+@supports selector(details::details-content) {
+  details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      content-visibility 300ms allow-discrete;
+  }
+
+  details[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Mobile navigation
+
+   Built on the native popover API: light-dismiss, Escape to close, top-layer
+   stacking and the invoker's expanded state all come from the platform, so
+   there is no open/close state to hold in React.
+   ───────────────────────────────────────────────────────────────────────── */
+.nav-popover {
+  position: fixed;
+  inset: 4rem 1rem auto 1rem;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0.5rem;
+  border: 1px solid light-dark(var(--color-slate-200), rgb(255 255 255 / 0.1));
+  border-radius: 1rem;
+  background-color: light-dark(rgb(255 255 255 / 0.92), rgb(11 13 20 / 0.94));
+  backdrop-filter: blur(16px);
+  color: inherit;
+  box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.45);
+  opacity: 0;
+  translate: 0 -0.5rem;
+  transition:
+    opacity 200ms ease,
+    translate 200ms ease,
+    /* Without this the element would vanish before the fade could run. */ overlay 200ms
+      allow-discrete,
+    display 200ms allow-discrete;
+}
+
+.nav-popover:popover-open {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* The entry transition's starting point — the closed state cannot be reused,
+   because the element is `display: none` until the popover opens. */
+@starting-style {
+  .nav-popover:popover-open {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
+}
+
+.nav-popover::backdrop {
+  background-color: rgb(0 0 0 / 0.4);
+  backdrop-filter: blur(2px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Progressive enhancement and accessibility
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Long sections are skipped during layout until they approach the viewport.
+   The size hint prevents the scrollbar jumping as each one is rendered. */
+.deferred-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+/* Glass surfaces are an effect, not information — drop the blur when asked. */
+@media (prefers-reduced-transparency: reduce) {
+  .nav-popover,
+  .site-nav {
+    backdrop-filter: none;
+    background-color: light-dark(#ffffff, var(--color-ink-raised));
+  }
+
+  .ambient-wash {
+    display: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .surface,
+  .surface-interactive,
+  .tag {
+    border-color: light-dark(var(--color-slate-400), var(--color-slate-500));
+  }
+
+  .accent-text {
+    background-image: none;
+    color: light-dark(var(--color-indigo-700), var(--color-indigo-300));
+  }
+}
+
+/* The typing effect is the only thing that needs JavaScript to look finished;
+   without it, show the static headline instead of a half-empty line. */
+@media (scripting: none) {
+  [data-requires-script] {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
