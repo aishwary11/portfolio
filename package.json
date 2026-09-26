@@ -1,50 +1,50 @@
 {
-  "name": "portfolio",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Portfolio of Aishwary Shah — Technical Lead and Backend Architect.",
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint . --max-warnings=0",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "verify": "npm run format:check && npm run typecheck && npm run lint && npm run build"
-  },
-  "dependencies": {
-    "clsx": "^2.1.1",
-    "lucide-react": "^1.33.0",
-    "next": "^16.3.1",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-icons": "^5.7.0",
-    "tailwind-merge": "^3.6.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^26.2.0",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
-    "babel-plugin-react-compiler": "^1.0.0",
-    "eslint": "^10.8.1",
-    "eslint-config-next": "^16.3.1",
-    "eslint-plugin-sonarjs": "^4.2.0",
-    "prettier": "^3.9.6",
-    "prettier-plugin-tailwindcss": "^0.8.1",
-    "tailwindcss": "^4.3.3",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.67.0"
-  },
-  "overrides": {
-    "typescript-eslint": "^8.67.0"
-  },
   "allowScripts": {
     "unrs-resolver@1.12.2": true
   },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.48.0",
+    "next": "^16.3.6",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-icons": "^5.7.0",
+    "tailwind-merge": "^3.7.0"
+  },
+  "description": "Portfolio of Aishwary Shah — Technical Lead and Backend Architect.",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "eslint": "^10.11.0",
+    "eslint-config-next": "^16.3.6",
+    "eslint-plugin-sonarjs": "^4.2.1",
+    "prettier": "^3.9.9",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.70.1"
+  },
   "engines": {
     "node": ">=20.9.0"
-  }
+  },
+  "name": "portfolio",
+  "overrides": {
+    "typescript-eslint": "^8.70.1"
+  },
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --turbopack",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run format:check && npm run typecheck && npm run lint && npm run build"
+  },
+  "version": "1.0.0"
 }
