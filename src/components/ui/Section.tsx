@@ -6,6 +6,8 @@ interface SectionProps {
   readonly id: string;
   /** Mono label naming the section. */
   readonly eyebrow: string;
+  /** Optional ordinal, rendered in the eyebrow for an editorial index. */
+  readonly index?: number;
   readonly title: ReactNode;
   readonly description?: ReactNode;
   readonly children: ReactNode;
@@ -19,17 +21,30 @@ interface SectionProps {
  * made the page read as a template, and it costs the reader a fresh alignment
  * to track on every scroll.
  */
-export function Section({ id, eyebrow, title, description, children, className }: SectionProps) {
+export function Section({
+  id,
+  eyebrow,
+  index,
+  title,
+  description,
+  children,
+  className,
+}: SectionProps) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn('deferred-section relative px-6 py-24 sm:py-28', className)}
+      className={cn('deferred-section relative px-6 py-20 sm:py-24 lg:py-28', className)}
     >
       <div className="mx-auto max-w-6xl">
-        <header className="reveal mb-14 max-w-3xl">
+        <header className="reveal mb-12 max-w-3xl sm:mb-16">
           <p className="eyebrow">
             <span aria-hidden="true" className="h-px w-6 bg-indigo-500/60" />
+            {index !== undefined ? (
+              <span className="text-indigo-500 tabular-nums dark:text-indigo-400">
+                {String(index).padStart(2, '0')}
+              </span>
+            ) : null}
             {eyebrow}
           </p>
           <h2

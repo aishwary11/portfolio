@@ -15,11 +15,12 @@ export function Contact() {
     <Section
       id="contact"
       eyebrow="Contact"
+      index={7}
       title="Open to Technical Lead and Architect roles"
       description="The fastest route is email. Everything below is the same detail that appears on the resume."
     >
-      <div className="grid gap-5 lg:grid-cols-[1fr_0.8fr]">
-        <div className="stagger space-y-4">
+      <div className="grid gap-6 lg:grid-cols-[1fr_0.8fr]">
+        <div className="stagger space-y-5">
           <div className="reveal">
             <CopyField
               label="Email"
@@ -78,7 +79,7 @@ export function Contact() {
           <a
             href={PROFILE.resumePath}
             download
-            className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+            className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
           >
             <Download aria-hidden="true" className="size-4" />
             Download resume

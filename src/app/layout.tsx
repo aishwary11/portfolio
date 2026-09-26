@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
   display: 'swap',
 });
 
-const SOCIAL_DESCRIPTION = `${PROFILE.title} with 8+ years building distributed, event-driven fintech and BFSI platforms on Node.js, Go, Kafka, PostgreSQL and Kubernetes.`;
+const SOCIAL_DESCRIPTION = `${PROFILE.title} with 8+ years building distributed, event-driven FinTech, BFSI and HealthTech platforms on Node.js, Go, Python/FastAPI, Kafka, PostgreSQL and Kubernetes.`;
 
 export const metadata: Metadata = {
   /** Makes every relative URL below resolve absolutely, as crawlers require. */
@@ -42,6 +42,9 @@ export const metadata: Metadata = {
     'Event-Driven Architecture',
     'Node.js',
     'Golang',
+    'Python',
+    'FastAPI',
+    'Pydantic',
     'PostgreSQL',
     'Apache Kafka',
     'Redis',
@@ -51,6 +54,8 @@ export const metadata: Metadata = {
     'Multi-Tenant SaaS',
     'Fintech',
     'BFSI',
+    'HealthTech',
+    'AI/LLM',
     'RAG',
     'pgvector',
   ],

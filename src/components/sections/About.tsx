@@ -22,6 +22,7 @@ export function About() {
     <Section
       id="about"
       eyebrow="About"
+      index={1}
       title="Backend architecture for regulated, high-volume platforms"
     >
       <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
@@ -30,13 +31,13 @@ export function About() {
           <p>{PROFILE.summaryExtended}</p>
         </div>
 
-        <div className="reveal surface p-6 sm:p-7">
-          <div className="hairline flex items-baseline justify-between border-b pb-4">
+        <div className="reveal surface p-6 lg:p-7">
+          <div className="hairline flex items-baseline justify-between border-b pb-5">
             <span className="eyebrow">Domains</span>
             <span className="meta">{domains.length} sectors</span>
           </div>
 
-          <ul className="mt-5 space-y-3">
+          <ul className="mt-6 space-y-3">
             {domains.map((entry) => (
               <li key={entry.domain} className="flex items-baseline justify-between gap-4">
                 <span className="text-sm text-slate-800 dark:text-slate-200">{entry.domain}</span>

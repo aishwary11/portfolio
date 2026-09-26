@@ -20,7 +20,7 @@ export const contentType = 'image/png';
 export default function OpengraphImage() {
   const tenure = computeTenure(CAREER_START);
 
-  const credentials = [tenure.label, 'Go · Node.js', 'Kafka · PostgreSQL', 'Kubernetes'];
+  const credentials = [tenure.label, 'Go · Node.js · Python', 'Kafka · PostgreSQL', 'Kubernetes'];
 
   return new ImageResponse(
     <div

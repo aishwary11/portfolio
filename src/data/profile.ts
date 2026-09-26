@@ -14,12 +14,13 @@ export const PROFILE = {
   name: 'Aishwary Shah',
   initials: 'AS',
   title: 'Technical Lead',
-  headline: 'Technical Lead | Backend Architect | Node.js | Golang | Distributed Systems',
+  headline:
+    'Technical Lead | Backend Architect | Node.js | Go | Python | Microservices | Distributed Systems | Kafka | Kubernetes | AI/LLM | RAG | pgvector',
   availability: 'Available for Technical Lead & Architect roles',
   summary:
-    'Technical Lead with 8+ years of experience designing, building, and scaling enterprise-grade fintech and BFSI platforms using Node.js, Go (Golang), React.js, PostgreSQL, Redis, Apache Kafka, and Kubernetes.',
+    'Technical Lead / Backend Architect with 8+ years of experience designing, building, and scaling FinTech, BFSI, and enterprise platforms. Hands-on expertise in Node.js, Go, Python/FastAPI, Kafka, PostgreSQL, Redis, Kubernetes, and AWS, with strong experience in microservices, distributed systems, event-driven architecture, multi-tenant SaaS, and API design.',
   summaryExtended:
-    'Proven expertise in architecting distributed microservices, event-driven systems, multi-tenant SaaS platforms, and high-volume transactional applications across cloud and on-premises infrastructure. Experienced in leading engineering teams, driving architecture decisions, optimizing database performance, and implementing secure, highly available production systems using modern DevOps practices.',
+    'Led 6+ engineers across architecture, technical decision-making, code reviews, mentoring, engineering standards, sprint planning, and production releases. Experienced in system design, performance optimization, CI/CD, cloud and hybrid infrastructure, security, observability, and production reliability. Built AI-powered RAG solutions using Python, FastAPI, Pydantic, Ollama, embeddings, and pgvector.',
   location: {
     city: 'Mumbai',
     region: 'Maharashtra',
@@ -31,7 +32,7 @@ export const PROFILE = {
   phone: '+91-8591693650',
   /** RFC 3966 form for `tel:` links — no separators. */
   phoneHref: '+918591693650',
-  resumePath: '/Aishwary-Shah-Technical-Lead.pdf',
+  resumePath: '/Aishwary_Shah_Tech_Lead.pdf',
   links: {
     linkedin: 'https://www.linkedin.com/in/aishwary-shah-web-developer/',
     github: 'https://github.com/aishwary11',
@@ -46,8 +47,9 @@ export const ROTATING_ROLES = [
   'Technical Lead',
   'Backend Architect',
   'Distributed Systems Engineer',
-  'Go & Node.js Specialist',
+  'Go · Node.js · Python Specialist',
   'Event-Driven Platform Designer',
+  'AI/LLM Platform Engineer',
 ] as const;
 
 /**
@@ -55,10 +57,10 @@ export const ROTATING_ROLES = [
  * nothing here relies on a metric that cannot be defended in an interview.
  */
 export const STATS: readonly Statistic[] = [
-  { value: '8+', label: 'Years Engineering', detail: 'Fintech, BFSI & trading platforms' },
+  { value: '8+', label: 'Years Engineering', detail: 'Fintech, BFSI & HealthTech platforms' },
   { value: '8', label: 'Companies Shipped For', detail: 'Enterprise & high-growth teams' },
   { value: '6+', label: 'Engineers Led', detail: 'Architecture, reviews & mentorship' },
-  { value: '2', label: 'Technical Lead Roles', detail: 'Platform re-architecture programmes' },
+  { value: '35%', label: 'Faster Critical APIs', detail: 'PostgreSQL tuning at First Credit' },
 ];
 
 export const NAV_LINKS: readonly NavLink[] = [

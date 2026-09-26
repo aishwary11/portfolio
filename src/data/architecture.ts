@@ -20,9 +20,9 @@ export const ARCHITECTURE_PILLARS: readonly ArchitecturePillar[] = [
     title: 'Multi-Tenant SaaS & Data Architecture',
     subtitle: 'Tenant isolation & caching',
     description:
-      'Centralized multi-tenant models in PostgreSQL with PgBouncer connection pooling and low-latency Redis configuration caching, reducing database lookups while keeping tenants isolated.',
+      'Centralized multi-tenant models in PostgreSQL with low-latency Redis configuration caching and query-plan, indexing and partitioning tuning, reducing database lookups while keeping tenants isolated.',
     icon: Database,
-    tags: ['Multi-Tenant SaaS', 'PostgreSQL', 'PgBouncer', 'Redis / Valkey', 'Query Tuning'],
+    tags: ['Multi-Tenant SaaS', 'PostgreSQL', 'Redis / Valkey', 'Query Tuning'],
     color: '#06B6D4',
   },
   {
@@ -38,9 +38,9 @@ export const ARCHITECTURE_PILLARS: readonly ArchitecturePillar[] = [
     title: 'AI, LLMs & Vector Retrieval',
     subtitle: 'Production RAG assistants',
     description:
-      'Conversational assistants built on Ollama, pgvector and embeddings over internal REST APIs, letting customers securely retrieve balances, loan information and FAQs, and raise support tickets.',
+      'AI-powered RAG assistants built with Python and FastAPI, using Pydantic for structured validation, a guardrail-oriented architecture for controlled, grounded responses, and Ollama, pgvector and embeddings for retrieval.',
     icon: Sparkles,
-    tags: ['RAG', 'pgvector', 'Ollama', 'Vector Search', 'Embeddings'],
+    tags: ['RAG', 'Python / FastAPI', 'Pydantic', 'pgvector', 'Ollama', 'Embeddings'],
     color: '#10B981',
   },
 ];

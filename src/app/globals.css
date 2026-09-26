@@ -127,7 +127,9 @@ li {
     border-radius: 1rem;
     transition:
       border-color 200ms ease,
-      background-color 200ms ease;
+      background-color 200ms ease,
+      translate 200ms ease,
+      box-shadow 200ms ease;
   }
 
   .surface-interactive:hover,
@@ -138,6 +140,9 @@ li {
       color-mix(in oklab, var(--color-indigo-accent) 35%, transparent)
     );
     background-color: light-dark(var(--color-slate-50), rgb(255 255 255 / 0.04));
+    /* Soft lift, so hover reads as raised rather than lit from below. */
+    translate: 0 -0.125rem;
+    box-shadow: 0 12px 32px -16px color-mix(in oklab, var(--color-indigo-accent) 35%, transparent);
   }
 
   /* Mono label naming a section. Mono is the page's data voice throughout:
@@ -145,7 +150,7 @@ li {
   .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.625rem;
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     letter-spacing: 0.18em;
@@ -172,6 +177,17 @@ li {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
     line-height: 1.5;
+    transition:
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .tag:hover {
+    border-color: light-dark(
+      color-mix(in oklab, var(--color-indigo-accent) 45%, transparent),
+      color-mix(in oklab, var(--color-indigo-accent) 35%, transparent)
+    );
+    color: light-dark(var(--color-slate-900), var(--color-slate-100));
   }
 
   /* The one gradient on the page, spent on the surname in the hero. */
@@ -563,6 +579,11 @@ summary::-webkit-details-marker {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .surface-interactive {
+    translate: none !important;
+    box-shadow: none !important;
   }
 
   *,

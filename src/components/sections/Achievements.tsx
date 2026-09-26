@@ -6,12 +6,13 @@ export function Achievements() {
     <Section
       id="achievements"
       eyebrow="Impact"
-      title="What the work added up to"
-      description="Stated as the resume states it — the outcomes, without figures that cannot be evidenced."
+      index={5}
+      title="Results the resume can back up"
+      description="One measured figure, the leadership scope, and the platform work behind them — all sourced from the resume."
     >
-      <ul className="stagger grid gap-5 md:grid-cols-2">
+      <ul className="stagger grid gap-6 md:grid-cols-2">
         {ACHIEVEMENTS.map((achievement) => (
-          <li key={achievement.title} className="reveal surface-interactive p-6 sm:p-7">
+          <li key={achievement.title} className="reveal surface-interactive p-6 lg:p-7">
             <div className="flex items-center justify-between gap-4">
               <span
                 aria-hidden="true"
@@ -22,7 +23,7 @@ export function Achievements() {
               <span className="tag">{achievement.badge}</span>
             </div>
 
-            <h3 className="mt-5 text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
+            <h3 className="mt-6 text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
               {achievement.title}
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">

@@ -11,8 +11,8 @@ function manifestRows(tenure: string) {
   return [
     { key: 'role', value: PROFILE.title },
     { key: 'tenure', value: tenure },
-    { key: 'domains', value: 'Fintech · BFSI · Trading' },
-    { key: 'languages', value: 'Go · TypeScript · Node.js' },
+    { key: 'domains', value: 'Fintech · BFSI · HealthTech' },
+    { key: 'languages', value: 'Go · Node.js · Python' },
     { key: 'platform', value: 'Kubernetes · Kafka · PostgreSQL' },
     { key: 'location', value: `${PROFILE.location.city}, IN` },
   ];
@@ -34,11 +34,11 @@ export function Hero() {
     <section
       id="top"
       aria-labelledby="hero-name"
-      className="relative flex min-h-dvh flex-col justify-center overflow-hidden px-6 pt-28 pb-10"
+      className="relative flex min-h-dvh flex-col justify-center overflow-hidden px-6 pt-28 pb-20 sm:pb-24 lg:pb-28"
     >
       <AmbientBackground />
 
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
         <div>
           <p className="reveal inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/8 px-3 py-1 font-mono text-xs text-emerald-700 dark:text-emerald-300">
             <span aria-hidden="true" className="relative flex size-1.5">
@@ -107,8 +107,8 @@ export function Hero() {
 
         {/* Credentials as a manifest: the page's data voice, established here and
             used for every period, count and label that follows. */}
-        <div className="reveal surface p-6 sm:p-7">
-          <div className="hairline flex items-center justify-between border-b pb-4">
+        <div className="reveal surface p-6 lg:p-7">
+          <div className="hairline flex items-center justify-between border-b pb-5">
             <span className="eyebrow">Profile</span>
             <span className="meta flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
               <span aria-hidden="true" className="size-1.5 rounded-full bg-emerald-500" />
@@ -116,7 +116,7 @@ export function Hero() {
             </span>
           </div>
 
-          <dl className="mt-5 space-y-3.5">
+          <dl className="mt-6 space-y-3.5">
             {rows.map((row) => (
               <div key={row.key} className="flex items-baseline gap-4">
                 <dt className="meta w-24 shrink-0">{row.key}</dt>
@@ -135,7 +135,7 @@ export function Hero() {
       </div>
 
       {/* Only figures that can be counted straight off the resume. */}
-      <ul className="stagger mx-auto mt-16 grid w-full max-w-6xl grid-cols-2 gap-x-8 sm:grid-cols-4">
+      <ul className="stagger mx-auto mt-20 grid w-full max-w-6xl grid-cols-2 gap-x-8 sm:mt-24 sm:grid-cols-4">
         {STATS.map((stat) => (
           <li key={stat.label} className="reveal hairline border-t pt-5">
             <p className="font-mono text-2xl font-semibold text-slate-900 tabular-nums dark:text-white">

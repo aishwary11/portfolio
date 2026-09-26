@@ -14,12 +14,13 @@ export function Architecture() {
     <Section
       id="architecture"
       eyebrow="Architecture"
+      index={2}
       title="Four problems I keep being brought in to solve"
       description="Each theme below is drawn from the roles that follow — the same patterns, applied across lending, broking and risk platforms."
     >
-      <ul className="stagger grid gap-5 md:grid-cols-2">
+      <ul className="stagger grid gap-6 md:grid-cols-2">
         {ARCHITECTURE_PILLARS.map((pillar) => (
-          <li key={pillar.title} className="reveal surface-interactive p-6 sm:p-7">
+          <li key={pillar.title} className="reveal surface-interactive p-6 lg:p-7">
             <div className="flex items-start gap-4">
               <span
                 aria-hidden="true"
@@ -40,11 +41,11 @@ export function Architecture() {
               </div>
             </div>
 
-            <p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <p className="mt-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
               {pillar.description}
             </p>
 
-            <ul className="mt-5 flex flex-wrap gap-1.5">
+            <ul className="mt-6 flex flex-wrap gap-1.5">
               {pillar.tags.map((tag) => (
                 <Tag key={tag} label={tag} />
               ))}

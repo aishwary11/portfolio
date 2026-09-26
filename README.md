@@ -4,7 +4,7 @@ Personal site for Aishwary Shah, Technical Lead and Backend Architect. One page,
 statically rendered, built from a typed copy of the resume.
 
 - **Live:** https://aishwaryshah.vercel.app
-- **Resume:** [`public/Aishwary-Shah-Technical-Lead.pdf`](public/Aishwary-Shah-Technical-Lead.pdf)
+- **Resume:** [`public/Aishwary_Shah_Tech_Lead.pdf`](public/Aishwary_Shah_Tech_Lead.pdf)
 
 ## Stack
 

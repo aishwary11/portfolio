@@ -1,38 +1,39 @@
-import { Cloud, Rocket, Users, Zap } from 'lucide-react';
+import { Gauge, Rocket, Sparkles, Users } from 'lucide-react';
 
 import type { Achievement } from '@/types/resume';
 
 /**
- * Achievements, reproduced verbatim from the resume's ACHIEVEMENTS section.
- * Deliberately free of figures the resume does not state.
+ * Highlights, each sourced from a fact the new resume states: the quantified
+ * PostgreSQL result, the team-led scope, the production RAG assistant and the
+ * Kafka migration. Deliberately free of figures the resume does not state.
  */
 export const ACHIEVEMENTS: readonly Achievement[] = [
   {
-    title: 'Platform Modernization',
+    title: '35% Faster Critical APIs',
     description:
-      'Led multiple platform modernization initiatives from monolithic architectures to event-driven microservices.',
-    icon: Rocket,
-    badge: 'Architecture',
-  },
-  {
-    title: 'High-Availability Infrastructure',
-    description:
-      'Designed and deployed production systems on AWS and on-premises Kubernetes infrastructure with high availability.',
-    icon: Cloud,
-    badge: 'Cloud & DevOps',
-  },
-  {
-    title: 'Event-Driven Fintech Platforms',
-    description:
-      'Built scalable event-driven architectures using Kafka, PostgreSQL, Redis, and RabbitMQ for fintech platforms.',
-    icon: Zap,
-    badge: 'Fintech & BFSI',
+      'Optimized PostgreSQL query plans, indexing, and partitioning, reducing critical API response times by 35% on a high-volume credit lending platform.',
+    icon: Gauge,
+    badge: 'Measured Result',
   },
   {
     title: 'Engineering Leadership',
     description:
-      'Mentored engineering teams, established coding standards, and drove architecture reviews across multiple projects.',
+      'Led 6+ engineers across architecture, technical decision-making, code reviews, mentoring, engineering standards, sprint planning, and production releases.',
     icon: Users,
     badge: 'Leadership',
+  },
+  {
+    title: 'Production RAG Assistant',
+    description:
+      'Built an AI-powered RAG assistant with Python, FastAPI, Pydantic, Ollama, pgvector, and embeddings, with structured validation and a guardrail-oriented architecture.',
+    icon: Sparkles,
+    badge: 'AI / LLM',
+  },
+  {
+    title: 'Platform Modernization',
+    description:
+      'Led platform re-architecture from legacy services to event-driven, DDD-based microservices, and migrated asynchronous messaging from RabbitMQ to Apache Kafka.',
+    icon: Rocket,
+    badge: 'Architecture',
   },
 ];

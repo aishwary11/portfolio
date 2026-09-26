@@ -20,6 +20,7 @@ export function Experience() {
     <Section
       id="experience"
       eyebrow="Experience"
+      index={4}
       title="Eight roles, newest first"
       description="Responsibilities are reproduced word for word from the resume, so nothing here can drift from the PDF."
     >
@@ -29,7 +30,7 @@ export function Experience() {
             <div className="flex gap-5 sm:gap-6">
               <span aria-hidden="true" className="log-marker" />
 
-              <div className="min-w-0 flex-1 pb-12">
+              <div className="min-w-0 flex-1 pb-14">
                 <p className="meta flex flex-wrap items-center gap-x-2">
                   <time dateTime={role.startedOn}>{role.period}</time>
                   <span aria-hidden="true">·</span>
@@ -48,14 +49,14 @@ export function Experience() {
                 </p>
 
                 {role.note ? (
-                  <p className="mt-4 flex items-start gap-2.5 rounded-lg border border-amber-500/25 bg-amber-500/8 px-3 py-2.5 text-xs leading-relaxed text-amber-800 dark:text-amber-200">
+                  <p className="mt-6 flex items-start gap-2.5 rounded-lg border border-amber-500/25 bg-amber-500/8 px-3 py-2.5 text-xs leading-relaxed text-amber-800 dark:text-amber-200">
                     <Info aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" />
                     {role.note}
                   </p>
                 ) : null}
 
                 {role.focus ? (
-                  <div className="mt-5">
+                  <div className="mt-6">
                     <p className="eyebrow">Architecture focus</p>
                     <ul className="mark-list mark-list-spec mt-3 space-y-2">
                       {role.focus.map((item) => (
@@ -70,7 +71,7 @@ export function Experience() {
                   </div>
                 ) : null}
 
-                <details className="group surface mt-5">
+                <details className="group surface mt-6">
                   <summary className="flex items-center justify-between gap-4 px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">
                     <span>
                       Responsibilities
@@ -94,7 +95,7 @@ export function Experience() {
                   </ul>
                 </details>
 
-                <ul className="mt-5 flex flex-wrap gap-1.5">
+                <ul className="mt-6 flex flex-wrap gap-1.5">
                   {role.stack.map((tech) => (
                     <Tag key={tech} label={tech} />
                   ))}
