@@ -30,7 +30,7 @@ export default function OpengraphImage() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        background: '#05060a',
+        background: '#000000',
         padding: 72,
         // A single wash, echoing the page's ambient background.
         backgroundImage:

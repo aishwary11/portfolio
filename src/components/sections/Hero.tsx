@@ -2,6 +2,7 @@ import { ArrowUpRight, Download, MapPin } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 import { AmbientBackground } from '@/components/layout/AmbientBackground';
+import { StatValue } from '@/components/sections/StatValue';
 import { TypingRoles } from '@/components/sections/TypingRoles';
 import { CAREER_START, PROFILE, STATS } from '@/data/profile';
 import { computeTenure } from '@/lib/tenure';
@@ -136,10 +137,10 @@ export function Hero() {
 
       {/* Only figures that can be counted straight off the resume. */}
       <ul className="stagger mx-auto mt-14 grid w-full max-w-6xl grid-cols-2 gap-x-8 sm:mt-16 sm:grid-cols-4">
-        {STATS.map((stat) => (
+        {STATS.map((stat, position) => (
           <li key={stat.label} className="reveal hairline border-t pt-5">
             <p className="font-mono text-2xl font-semibold text-slate-900 tabular-nums dark:text-white">
-              {stat.value}
+              <StatValue value={stat.value} position={position + 1} />
             </p>
             <p className="mt-1 text-xs font-medium text-slate-700 dark:text-slate-300">
               {stat.label}

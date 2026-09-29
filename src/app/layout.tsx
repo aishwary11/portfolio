@@ -14,19 +14,23 @@ import './globals.css';
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
-  display: 'swap',
+  /* `optional` gives the webfont only the ~100ms block window: above-fold text
+     paints once, in whichever font is ready — no fallback→webfont repaint of
+     the LCP element. The metric-adjusted fallback keeps either outcome CLS-safe,
+     and repeat visits win the window from disk cache. */
+  display: 'optional',
 });
 
 const spaceGrotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
   subsets: ['latin'],
-  display: 'swap',
+  display: 'optional',
 });
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
-  display: 'swap',
+  display: 'optional',
 });
 
 const SOCIAL_DESCRIPTION = `${PROFILE.title} with 8+ years building distributed, event-driven FinTech, BFSI and HealthTech platforms on Node.js, Go, Python/FastAPI, Kafka, PostgreSQL and Kubernetes.`;
@@ -111,8 +115,8 @@ export const viewport: Viewport = {
   // Capping or locking zoom fails WCAG 1.4.4; the previous max of 5 is removed.
   colorScheme: 'dark light',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#05060a' },
+    { media: '(prefers-color-scheme: light)', color: '#faf9f7' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
   ],
 };
 

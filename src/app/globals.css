@@ -20,8 +20,8 @@
   --color-cyan-accent: #22d3ee;
   --color-emerald-accent: #10b981;
 
-  --color-ink: #05060a;
-  --color-ink-raised: #0b0d14;
+  --color-ink: #000000;
+  --color-ink-raised: #0a0a0c;
 }
 
 /* Typed so it can be interpolated — untyped custom properties animate as
@@ -46,7 +46,7 @@ html {
   /* `color-scheme` is the switch `light-dark()` reads from, so setting it here
      means the component layer needs no `dark:` variants at all. */
   color-scheme: light;
-  background-color: #ffffff;
+  background-color: #faf9f7;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -56,7 +56,9 @@ html.dark {
 }
 
 body {
-  background-color: light-dark(#ffffff, var(--color-ink));
+  /* Off-white rather than pure white: large light surfaces glare, and the warm
+     cast keeps the mono labels from buzzing against the page. */
+  background-color: light-dark(#faf9f7, var(--color-ink));
   color: light-dark(var(--color-slate-900), var(--color-slate-100));
   font-synthesis-weight: none;
 }
@@ -87,8 +89,8 @@ li {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -96,12 +98,14 @@ li {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: color-mix(in oklab, var(--color-indigo-accent) 55%, transparent);
+  /* Off-white at low opacity in the dark theme — present but dim; a dim slate
+     in light, so the same quiet weight reads on both surfaces. */
+  background: light-dark(rgb(15 23 42 / 0.3), rgb(250 249 247 / 0.32));
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-indigo-accent);
+  background: light-dark(rgb(15 23 42 / 0.5), rgb(250 249 247 / 0.55));
 }
 
 /* Keyboard focus stays visible everywhere, including inside cards. */
@@ -303,15 +307,12 @@ li {
   inset-block-start: 0;
   inset-inline: 0;
   z-index: 60;
-  height: 2px;
+  /* Heavier than a hairline so it registers, dim enough to sit behind the
+     navbar seam without shouting — off-white over ink, slate over paper. */
+  height: 3px;
   transform: scaleX(0);
   transform-origin: 0 50%;
-  background-image: linear-gradient(
-    90deg,
-    var(--color-indigo-accent),
-    var(--color-violet-accent),
-    var(--color-cyan-accent)
-  );
+  background-color: light-dark(rgb(15 23 42 / 0.55), rgb(250 249 247 / 0.5));
 }
 
 .site-nav {
@@ -500,9 +501,9 @@ summary::-webkit-details-marker {
   max-width: none;
   margin: 0;
   padding: 0.5rem;
-  border: 1px solid light-dark(var(--color-slate-200), rgb(255 255 255 / 0.1));
+  border: 1px solid light-dark(var(--color-slate-200), rgb(255 255 255 / 0.08));
   border-radius: 1rem;
-  background-color: light-dark(rgb(255 255 255 / 0.92), rgb(11 13 20 / 0.94));
+  background-color: light-dark(rgb(255 255 255 / 0.92), rgb(4 4 6 / 0.94));
   backdrop-filter: blur(16px);
   color: inherit;
   box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.45);

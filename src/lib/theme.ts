@@ -25,4 +25,4 @@ export const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem(${J
   THEME_STORAGE_KEY,
 )});var t=s?JSON.parse(s):null;if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":${JSON.stringify(
   DEFAULT_THEME,
-)};}var r=document.documentElement;r.classList.toggle("dark",t==="dark");r.style.colorScheme=t;}catch(e){document.documentElement.classList.add("dark");}})();`;
+)};}var r=document.documentElement;r.classList.toggle("dark",t==="dark");r.style.colorScheme=t;}catch(e){document.documentElement.classList.add("dark");r.style.colorScheme="dark";}})();`;
