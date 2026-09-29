@@ -10,7 +10,9 @@
    up in a component — that constraint is what keeps the page coherent.
    ───────────────────────────────────────────────────────────────────────── */
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-space-grotesk), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   --color-indigo-accent: #6366f1;
@@ -64,6 +66,8 @@ h1,
 h2,
 h3,
 h4 {
+  /* Space Grotesk for display; Inter falls back when a style needs it. */
+  font-family: var(--font-display);
   text-wrap: balance;
 }
 
@@ -539,7 +543,7 @@ summary::-webkit-details-marker {
    The size hint prevents the scrollbar jumping as each one is rendered. */
 .deferred-section {
   content-visibility: auto;
-  contain-intrinsic-size: auto 800px;
+  contain-intrinsic-size: auto 600px;
 }
 
 /* Glass surfaces are an effect, not information — drop the blur when asked. */

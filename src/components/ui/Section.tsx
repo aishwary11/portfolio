@@ -34,10 +34,10 @@ export function Section({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn('deferred-section relative px-6 py-20 sm:py-24 lg:py-28', className)}
+      className={cn('deferred-section relative px-6 py-14 sm:py-16 lg:py-20', className)}
     >
       <div className="mx-auto max-w-6xl">
-        <header className="reveal mb-12 max-w-3xl sm:mb-16">
+        <header className="reveal mb-8 max-w-3xl sm:mb-10">
           <p className="eyebrow">
             <span aria-hidden="true" className="h-px w-6 bg-indigo-500/60" />
             {index !== undefined ? (
@@ -49,12 +49,12 @@ export function Section({
           </p>
           <h2
             id={`${id}-title`}
-            className="mt-4 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl dark:text-white"
+            className="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl dark:text-white"
           >
             {title}
           </h2>
           {description ? (
-            <p className="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">
+            <p className="mt-3 text-base leading-relaxed text-slate-600 dark:text-slate-400">
               {description}
             </p>
           ) : null}

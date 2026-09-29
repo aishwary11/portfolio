@@ -8,7 +8,7 @@ export function Education() {
     <Section id="education" eyebrow="Education" index={6} title="Formal qualifications">
       <ul className="stagger grid gap-6 md:grid-cols-2">
         {QUALIFICATIONS.map((qualification) => (
-          <li key={qualification.degree} className="reveal surface-interactive p-6 lg:p-7">
+          <li key={qualification.degree} className="reveal surface-interactive p-5 lg:p-6">
             <div className="flex items-start gap-4">
               <span
                 aria-hidden="true"

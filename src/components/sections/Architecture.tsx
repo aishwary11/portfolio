@@ -20,7 +20,7 @@ export function Architecture() {
     >
       <ul className="stagger grid gap-6 md:grid-cols-2">
         {ARCHITECTURE_PILLARS.map((pillar) => (
-          <li key={pillar.title} className="reveal surface-interactive p-6 lg:p-7">
+          <li key={pillar.title} className="reveal surface-interactive p-5 lg:p-6">
             <div className="flex items-start gap-4">
               <span
                 aria-hidden="true"

@@ -30,7 +30,7 @@ export function Experience() {
             <div className="flex gap-5 sm:gap-6">
               <span aria-hidden="true" className="log-marker" />
 
-              <div className="min-w-0 flex-1 pb-14">
+              <div className="min-w-0 flex-1 pb-10">
                 <p className="meta flex flex-wrap items-center gap-x-2">
                   <time dateTime={role.startedOn}>{role.period}</time>
                   <span aria-hidden="true">·</span>

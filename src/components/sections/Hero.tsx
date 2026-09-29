@@ -34,11 +34,11 @@ export function Hero() {
     <section
       id="top"
       aria-labelledby="hero-name"
-      className="relative flex min-h-dvh flex-col justify-center overflow-hidden px-6 pt-28 pb-20 sm:pb-24 lg:pb-28"
+      className="relative flex min-h-dvh flex-col justify-center overflow-hidden px-6 pt-24 pb-14 sm:pb-16 lg:pb-20"
     >
       <AmbientBackground />
 
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
         <div>
           <p className="reveal inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/8 px-3 py-1 font-mono text-xs text-emerald-700 dark:text-emerald-300">
             <span aria-hidden="true" className="relative flex size-1.5">
@@ -50,22 +50,22 @@ export function Hero() {
 
           <h1
             id="hero-name"
-            className="reveal mt-7 text-5xl leading-[0.95] font-semibold tracking-[-0.03em] text-balance text-slate-900 sm:text-6xl lg:text-7xl dark:text-white"
+            className="reveal mt-6 text-5xl leading-[0.95] font-semibold tracking-[-0.03em] text-balance text-slate-900 sm:text-6xl lg:text-7xl dark:text-white"
           >
             Aishwary
             <br />
             <span className="accent-text">Shah</span>
           </h1>
 
-          <div className="reveal mt-6">
+          <div className="reveal mt-5">
             <TypingRoles />
           </div>
 
-          <p className="reveal mt-6 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400">
+          <p className="reveal mt-5 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400">
             {PROFILE.summary}
           </p>
 
-          <div className="reveal mt-9 flex flex-wrap items-center gap-3">
+          <div className="reveal mt-7 flex flex-wrap items-center gap-3">
             <a
               href="#contact"
               className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
@@ -116,7 +116,7 @@ export function Hero() {
             </span>
           </div>
 
-          <dl className="mt-6 space-y-3.5">
+          <dl className="mt-6 space-y-3">
             {rows.map((row) => (
               <div key={row.key} className="flex items-baseline gap-4">
                 <dt className="meta w-24 shrink-0">{row.key}</dt>
@@ -135,7 +135,7 @@ export function Hero() {
       </div>
 
       {/* Only figures that can be counted straight off the resume. */}
-      <ul className="stagger mx-auto mt-20 grid w-full max-w-6xl grid-cols-2 gap-x-8 sm:mt-24 sm:grid-cols-4">
+      <ul className="stagger mx-auto mt-14 grid w-full max-w-6xl grid-cols-2 gap-x-8 sm:mt-16 sm:grid-cols-4">
         {STATS.map((stat) => (
           <li key={stat.label} className="reveal hairline border-t pt-5">
             <p className="font-mono text-2xl font-semibold text-slate-900 tabular-nums dark:text-white">

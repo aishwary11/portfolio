@@ -22,7 +22,7 @@ export function Skills() {
         {SKILL_CATEGORIES.map((category) => (
           <li
             key={category.category}
-            className="reveal surface-interactive flex flex-col p-6 lg:p-7"
+            className="reveal surface-interactive flex flex-col p-5 lg:p-6"
           >
             <div className="hairline flex items-center gap-3 border-b pb-5">
               <span

@@ -12,7 +12,7 @@ export function Achievements() {
     >
       <ul className="stagger grid gap-6 md:grid-cols-2">
         {ACHIEVEMENTS.map((achievement) => (
-          <li key={achievement.title} className="reveal surface-interactive p-6 lg:p-7">
+          <li key={achievement.title} className="reveal surface-interactive p-5 lg:p-6">
             <div className="flex items-center justify-between gap-4">
               <span
                 aria-hidden="true"

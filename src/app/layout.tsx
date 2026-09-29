@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist_Mono, Inter, Space_Grotesk } from 'next/font/google';
 import type { ReactNode } from 'react';
 
 import { Footer } from '@/components/layout/Footer';
@@ -11,8 +11,14 @@ import { THEME_INIT_SCRIPT } from '@/lib/theme';
 
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
+  variable: '--font-inter',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: '--font-space-grotesk',
   subsets: ['latin'],
   display: 'swap',
 });
@@ -114,13 +120,20 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     /* The init script below sets `class` and `style` on this element before React
        hydrates, which is a mismatch React should be told to expect. */
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      /* Font variables live here, on :root, so tokens declared in @theme can
+         resolve them — on <body> they are one scope too deep and every
+         font-family silently falls back to system fonts. */
+      className={`${inter.variable} ${spaceGrotesk.variable} ${geistMono.variable}`}
+    >
       <head>
         {/* Blocking on purpose: it has to win the race against first paint, or
             the page renders in the wrong palette and then corrects itself. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="antialiased">
         <SkipLink />
         <div aria-hidden="true" className="scroll-progress" />
         <Navbar />
