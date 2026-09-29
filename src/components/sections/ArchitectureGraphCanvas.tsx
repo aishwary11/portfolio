@@ -100,7 +100,9 @@ export default function ArchitectureGraphCanvas() {
         if (!source || !target)
           throw new Error(`Unlinked graph node in ${link.source} → ${link.target}`);
         const connected = active === null || active === link.source || active === link.target;
-        return { ...link, source, target, connected };
+        /* The ids stay strings — overwriting them with the coordinate objects
+           would stringify every React key to `[object Object]-[object Object]`. */
+        return { ...link, sourcePoint: source, targetPoint: target, connected };
       }),
     [active],
   );
@@ -133,10 +135,10 @@ export default function ArchitectureGraphCanvas() {
           {edges.map((edge) => (
             <line
               key={`${edge.source}-${edge.target}`}
-              x1={edge.source.x}
-              y1={edge.source.y}
-              x2={edge.target.x}
-              y2={edge.target.y}
+              x1={edge.sourcePoint.x}
+              y1={edge.sourcePoint.y}
+              x2={edge.targetPoint.x}
+              y2={edge.targetPoint.y}
               stroke={edge.connected && activeColor ? activeColor : BASE_EDGE_COLOR}
               strokeWidth={edge.connected && activeColor ? 1.75 : 1}
               className="transition-opacity duration-200"
