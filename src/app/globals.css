@@ -32,6 +32,21 @@
   initial-value: 110deg;
 }
 
+/* Typed custom properties for the CSS 3D card tilt. Declaring them here gives
+   every `.tilt` surface the same resting transform, and the typed angle is
+   what lets `rotateX/rotateY` interpolate instead of snapping. */
+@property --tilt-x {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --tilt-y {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 /* ─────────────────────────────────────────────────────────────────────────
    Base
    ───────────────────────────────────────────────────────────────────────── */
@@ -151,6 +166,23 @@ li {
     /* Soft lift, so hover reads as raised rather than lit from below. */
     translate: 0 -0.125rem;
     box-shadow: 0 12px 32px -16px color-mix(in oklab, var(--color-indigo-accent) 35%, transparent);
+  }
+
+  /* CSS 3D tilt on pointer devices that allow motion — a couple of degrees of
+     perspective from typed custom properties, no JavaScript. Touch devices and
+     reduced-motion users keep the flat lift. */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .surface-interactive.tilt {
+      transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+      transition: transform 250ms ease;
+      transform-style: preserve-3d;
+    }
+
+    .surface-interactive.tilt:hover {
+      --tilt-x: -2deg;
+      --tilt-y: 1.25deg;
+      transition: transform 120ms ease;
+    }
   }
 
   /* Mono label naming a section. Mono is the page's data voice throughout:

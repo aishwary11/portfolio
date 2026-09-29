@@ -1,3 +1,4 @@
+import { ArchitectureGraph } from '@/components/sections/ArchitectureGraph';
 import { Section } from '@/components/ui/Section';
 import { Tag } from '@/components/ui/Tag';
 import { ARCHITECTURE_PILLARS } from '@/data/architecture';
@@ -20,7 +21,7 @@ export function Architecture() {
     >
       <ul className="stagger grid gap-6 md:grid-cols-2">
         {ARCHITECTURE_PILLARS.map((pillar) => (
-          <li key={pillar.title} className="reveal surface-interactive p-5 lg:p-6">
+          <li key={pillar.title} className="reveal surface-interactive tilt p-5 lg:p-6">
             <div className="flex items-start gap-4">
               <span
                 aria-hidden="true"
@@ -53,6 +54,9 @@ export function Architecture() {
           </li>
         ))}
       </ul>
+
+      {/* Supplementary visual: the same systems the cards describe, as a graph. */}
+      <ArchitectureGraph />
     </Section>
   );
 }

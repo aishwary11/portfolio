@@ -4,19 +4,23 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "d3-force": "^3.0.0",
     "lucide-react": "^1.48.0",
     "next": "^16.3.6",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-icons": "^5.7.0",
-    "tailwind-merge": "^3.7.0"
+    "tailwind-merge": "^3.7.0",
+    "three": "^0.186.1"
   },
   "description": "Portfolio of Aishwary Shah — Technical Lead and Backend Architect.",
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
+    "@types/d3-force": "^3.0.10",
     "@types/node": "^26.6.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.186.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^10.11.0",
     "eslint-config-next": "^16.3.6",
