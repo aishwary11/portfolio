@@ -2,6 +2,7 @@ import { ArrowUpRight, Download, MapPin } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 import { AmbientBackground } from '@/components/layout/AmbientBackground';
+import { HeroSceneCanvas } from '@/components/layout/HeroSceneCanvas';
 import { StatValue } from '@/components/sections/StatValue';
 import { TypingRoles } from '@/components/sections/TypingRoles';
 import { CAREER_START, PROFILE, STATS } from '@/data/profile';
@@ -37,9 +38,13 @@ export function Hero() {
       aria-labelledby="hero-name"
       className="relative flex min-h-dvh flex-col justify-center overflow-hidden px-6 pt-24 pb-14 sm:pb-16 lg:pb-20"
     >
+      {/* WebGL layer: three.js particle field + wireframe solid. */}
+      <HeroSceneCanvas />
+
+      {/* CSS fallback for no-JS and pre-hydration, kept under the canvas. */}
       <AmbientBackground />
 
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
         <div>
           <p className="reveal inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/8 px-3 py-1 font-mono text-xs text-emerald-700 dark:text-emerald-300">
             <span aria-hidden="true" className="relative flex size-1.5">
@@ -51,7 +56,7 @@ export function Hero() {
 
           <h1
             id="hero-name"
-            className="reveal mt-6 text-5xl leading-[0.95] font-semibold tracking-[-0.03em] text-balance text-slate-900 sm:text-6xl lg:text-7xl dark:text-white"
+            className="reveal mt-6 text-6xl leading-[0.92] font-bold tracking-[-0.04em] text-balance text-slate-900 sm:text-7xl lg:text-[6.5rem] dark:text-white"
           >
             Aishwary
             <br />
@@ -66,10 +71,10 @@ export function Hero() {
             {PROFILE.summary}
           </p>
 
-          <div className="reveal mt-7 flex flex-wrap items-center gap-3">
+          <div className="reveal mt-8 flex flex-wrap items-center gap-3">
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+              className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3.5 text-sm font-medium text-white ring-indigo-500/50 ring-offset-2 ring-offset-[#faf9f7] transition-colors hover:bg-slate-700 focus-visible:ring-2 dark:bg-white dark:text-slate-900 dark:ring-offset-[#000000] dark:hover:bg-slate-200"
             >
               Get in touch
               <ArrowUpRight aria-hidden="true" className="size-4" />
@@ -117,10 +122,10 @@ export function Hero() {
             </span>
           </div>
 
-          <dl className="mt-6 space-y-3">
+          <dl className="mt-6 space-y-3.5">
             {rows.map((row) => (
               <div key={row.key} className="flex items-baseline gap-4">
-                <dt className="meta w-24 shrink-0">{row.key}</dt>
+                <dt className="meta w-28 shrink-0">{row.key}</dt>
                 <dd className="font-mono text-sm text-slate-800 dark:text-slate-200">
                   {row.value}
                 </dd>

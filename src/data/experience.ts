@@ -18,6 +18,7 @@ export const ROLES: readonly Role[] = [
     domain: 'Fintech / Lending',
     stack: [
       'Node.js',
+      'React',
       'PostgreSQL',
       'Apache Kafka',
       'Redis',
@@ -30,7 +31,7 @@ export const ROLES: readonly Role[] = [
       'Embeddings',
     ],
     highlights: [
-      'Led the v2 re-architecture of a large-scale credit lending platform into scalable DDD-based microservices using Node.js, PostgreSQL, Kafka, Redis, and Kubernetes across hybrid cloud/on-prem environments.',
+      'Led the V2 re-architecture of a large-scale credit lending platform into scalable DDD-based microservices using Node.js, React, PostgreSQL, Kafka, Redis, and Kubernetes across hybrid cloud/on-prem environments.',
       'Led a 6+ engineer team across architecture, code reviews, mentoring, engineering standards, sprint planning, and releases; designed multi-tenant architecture using PostgreSQL and Redis.',
       'Built an AI-powered RAG assistant using Python, FastAPI, Pydantic, Ollama, pgvector, and embeddings, with structured validation and a guardrail-oriented architecture for controlled and grounded responses.',
       'Optimized PostgreSQL query plans, indexing, and partitioning, reducing critical API response times by 35%.',
@@ -56,6 +57,7 @@ export const ROLES: readonly Role[] = [
       'Pydantic',
       'Go (Golang)',
       'Node.js',
+      'React',
       'PostgreSQL',
       'Redis',
       'Apache Kafka',
@@ -67,7 +69,7 @@ export const ROLES: readonly Role[] = [
     ],
     highlights: [
       'Architected a connected healthcare platform with a custom smart app collecting patient health metrics, including heart rate and other vital readings, for centralized doctor access.',
-      'Designed multi-tenant healthcare architecture supporting controlled access to patient data, doctor profiles, appointments, availability, and scheduling using Python/FastAPI, Go, Node.js, PostgreSQL, Redis, Kafka, and Kubernetes.',
+      'Designed multi-tenant healthcare architecture supporting controlled access to patient data, doctor profiles, appointments, availability, and scheduling using Python/FastAPI, Go, Node.js, React, PostgreSQL, Redis, Kafka, and Kubernetes.',
       'Developed FastAPI-based backend services using Pydantic for request/response validation and schema modeling, integrating PostgreSQL and Redis for healthcare data and high-performance API workflows.',
       'Implemented event-driven architecture using Kafka and the Transactional Outbox Pattern, with secure JWT, RBAC, TOTP MFA, Argon2, refresh-token rotation, and Redis-backed sessions.',
     ],
@@ -89,6 +91,7 @@ export const ROLES: readonly Role[] = [
     note: 'Role concluded due to company-wide restructuring and budget optimization.',
     stack: [
       'Node.js',
+      'React.js',
       'Go (Golang)',
       'PostgreSQL',
       'Apache Kafka',
@@ -97,7 +100,7 @@ export const ROLES: readonly Role[] = [
       'GitHub Actions',
     ],
     highlights: [
-      'Built Node.js and Go microservices with PostgreSQL and Kafka for enterprise insurance and real-estate risk management workflows, including policy processing and property assessment.',
+      'Built full-stack applications and microservices using React.js, Node.js, Go, PostgreSQL, and Kafka for enterprise insurance and real estate risk management workflows, including policy processing and property assessment.',
       'Implemented Kafka-based asynchronous workflows and production CI/CD using GitHub Actions, Docker, Kubernetes, and Rancher.',
     ],
     focus: [
@@ -141,11 +144,15 @@ export const ROLES: readonly Role[] = [
     startedOn: '2022-09',
     endedOn: '2023-06',
     domain: 'Enterprise Publishing & Content',
-    stack: ['Node.js', 'Express.js', 'React.js', 'GraphQL', 'Redis'],
+    stack: ['Node.js', 'Express.js', 'React.js', 'GraphQL', 'Redis', 'Python', 'FastAPI'],
     highlights: [
       'Developed scalable enterprise applications using Node.js, Express.js, React.js, GraphQL, and Redis, improving backend and application performance through caching and optimization.',
+      'Developed backend services for an event-organizing application using Python and FastAPI building REST APIs for event management and related workflows.',
     ],
-    focus: ['GraphQL APIs and Redis caching for high-volume content processing'],
+    focus: [
+      'GraphQL APIs and Redis caching for high-volume content processing',
+      'Python and FastAPI REST services for event-management workflows',
+    ],
   },
   {
     company: 'Vernost Marketing Technology Solutions Pvt. Ltd.',

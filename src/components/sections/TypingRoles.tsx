@@ -19,7 +19,7 @@ export function TypingRoles() {
 
   return (
     <p
-      className="flex min-h-8 items-center font-mono text-lg text-slate-700 sm:text-xl dark:text-slate-300"
+      className="flex min-h-8 items-center font-mono text-xl text-slate-700 sm:text-2xl dark:text-slate-300"
       /* The value changes on a timer; announcing every character would be noise. */
       aria-live="off"
     >
