@@ -26,7 +26,7 @@ export function Experience() {
     >
       <ol className="stagger">
         {ROLES.map((role) => (
-          <li key={`${role.company}-${role.startedOn}`} className="log-entry reveal">
+          <li key={`${role.company}-${role.startedOn}`} className="log-entry reveal-depth">
             <div className="flex gap-5 sm:gap-6">
               <span aria-hidden="true" className="log-marker" />
 

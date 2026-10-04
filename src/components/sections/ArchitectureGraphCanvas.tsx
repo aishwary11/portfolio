@@ -6,6 +6,8 @@ import { useMemo, useState } from 'react';
 
 import { GRAPH_LINKS, GRAPH_NODES, GROUP_META, type GraphGroup } from '@/data/architecture-graph';
 
+import type { CSSProperties } from 'react';
+
 const VIEW_WIDTH = 880;
 const VIEW_HEIGHT = 540;
 /** Padding so node labels never clip against the viewBox edge. */
@@ -20,6 +22,17 @@ interface SimNode extends SimulationNodeDatum {
 }
 
 interface SimLink extends SimulationLinkDatum<SimNode> {}
+
+/**
+ * Custom properties are not part of `CSSProperties`, so the entry timings and
+ * the measured edge lengths are declared explicitly. `--edge-length` is set
+ * from the settled coordinates — no `pathLength` support to gamble on.
+ */
+type GraphVars = CSSProperties & {
+  '--edge-length'?: string;
+  '--edge-delay'?: string;
+  '--node-delay'?: string;
+};
 
 /**
  * Node positions settled once at module load by a simulation nobody animates.
@@ -86,13 +99,17 @@ const BASE_EDGE_COLOR = 'light-dark(rgb(15 23 42 / 0.18), rgb(250 249 247 / 0.18
  * one-line role in the caption. The figure itself is the accessibility story —
  * a labelled image plus a visually-hidden list of every node's detail — so the
  * pointer interaction is a bonus, never the only route to the information.
+ *
+ * Because the canvas only mounts once its section approaches the viewport, the
+ * one-shot entry animation reads as the topology assembling: edges draw along
+ * their true lengths, then the markers pop.
  */
 export default function ArchitectureGraphCanvas() {
   const [active, setActive] = useState<string | null>(null);
 
   const edges = useMemo(
     () =>
-      GRAPH_LINKS.map((link) => {
+      GRAPH_LINKS.map((link, index) => {
         const source = LAYOUT.get(link.source);
         const target = LAYOUT.get(link.target);
         /* Both endpoints are curated in the same module — missing ids are a
@@ -102,7 +119,14 @@ export default function ArchitectureGraphCanvas() {
         const connected = active === null || active === link.source || active === link.target;
         /* The ids stay strings — overwriting them with the coordinate objects
            would stringify every React key to `[object Object]-[object Object]`. */
-        return { ...link, sourcePoint: source, targetPoint: target, connected };
+        return {
+          ...link,
+          sourcePoint: source,
+          targetPoint: target,
+          connected,
+          length: Math.hypot(target.x - source.x, target.y - source.y),
+          delay: index * 30,
+        };
       }),
     [active],
   );
@@ -141,14 +165,20 @@ export default function ArchitectureGraphCanvas() {
               y2={edge.targetPoint.y}
               stroke={edge.connected && activeColor ? activeColor : BASE_EDGE_COLOR}
               strokeWidth={edge.connected && activeColor ? 1.75 : 1}
-              className="transition-opacity duration-200"
-              style={{ opacity: edge.connected ? 1 : 0.35 }}
+              className="graph-edge transition-opacity duration-200"
+              style={
+                {
+                  opacity: edge.connected ? 1 : 0.35,
+                  '--edge-length': `${edge.length}`,
+                  '--edge-delay': `${edge.delay}ms`,
+                } as GraphVars
+              }
             />
           ))}
         </g>
 
         <g>
-          {GRAPH_NODES.map((node) => {
+          {GRAPH_NODES.map((node, index) => {
             const point = LAYOUT.get(node.id);
             if (!point) throw new Error(`Graph node ${node.id} has no settled position`);
 
@@ -164,26 +194,37 @@ export default function ArchitectureGraphCanvas() {
                 onMouseEnter={() => setActive(node.id)}
                 onMouseLeave={() => setActive(null)}
               >
-                {/* Transparent, not `none`: `visiblePainted` hit-testing needs paint. */}
-                <circle cx={point.x} cy={point.y} r={22} fill="transparent" />
-                <circle
-                  cx={point.x}
-                  cy={point.y}
-                  r={13}
-                  fill="none"
-                  stroke={meta.color}
-                  strokeWidth={1.5}
-                  className="transition-opacity duration-200"
-                  style={{ opacity: active === node.id ? 0.55 : 0 }}
-                />
-                <circle
-                  cx={point.x}
-                  cy={point.y}
-                  r={NODE_RADIUS}
-                  fill={meta.color}
-                  fillOpacity={0.85}
-                  stroke={meta.color}
-                />
+                {/* Markers pop in around their own point; the label stays put. */}
+                <g
+                  className="graph-node"
+                  style={
+                    {
+                      transformOrigin: `${point.x}px ${point.y}px`,
+                      '--node-delay': `${140 + index * 40}ms`,
+                    } as GraphVars
+                  }
+                >
+                  {/* Transparent, not `none`: `visiblePainted` hit-testing needs paint. */}
+                  <circle cx={point.x} cy={point.y} r={22} fill="transparent" />
+                  <circle
+                    cx={point.x}
+                    cy={point.y}
+                    r={13}
+                    fill="none"
+                    stroke={meta.color}
+                    strokeWidth={1.5}
+                    className="transition-opacity duration-200"
+                    style={{ opacity: active === node.id ? 0.55 : 0 }}
+                  />
+                  <circle
+                    cx={point.x}
+                    cy={point.y}
+                    r={NODE_RADIUS}
+                    fill={meta.color}
+                    fillOpacity={0.85}
+                    stroke={meta.color}
+                  />
+                </g>
                 <text
                   x={point.x}
                   y={point.y + 24}

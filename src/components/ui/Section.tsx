@@ -37,7 +37,7 @@ export function Section({
       className={cn('deferred-section relative px-6 py-14 sm:py-16 lg:py-20', className)}
     >
       <div className="mx-auto max-w-6xl">
-        <header className="reveal mb-8 max-w-3xl sm:mb-10">
+        <header className="reveal-depth mb-8 max-w-3xl sm:mb-10">
           <p className="eyebrow">
             <span aria-hidden="true" className="h-px w-6 bg-indigo-500/60" />
             {index !== undefined ? (

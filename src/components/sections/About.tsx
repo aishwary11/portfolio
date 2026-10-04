@@ -31,7 +31,7 @@ export function About() {
           <p>{PROFILE.summaryExtended}</p>
         </div>
 
-        <div className="reveal surface p-5 lg:p-6">
+        <div className="reveal-depth surface p-5 lg:p-6">
           <div className="hairline flex items-baseline justify-between border-b pb-5">
             <span className="eyebrow">Domains</span>
             <span className="meta">{domains.length} sectors</span>

@@ -9,6 +9,10 @@ import { ARCHITECTURE_PILLARS } from '@/data/architecture';
  * Placed before the timeline on purpose: it answers "what does this person
  * actually do" once, so the reader can then treat the timeline as evidence
  * rather than having to synthesise the pattern themselves.
+ *
+ * The reveal and the tilt sit on separate elements: a scroll-driven animation
+ * outranks normal declarations, so the tilt transform would never apply if it
+ * shared an element with the reveal.
  */
 export function Architecture() {
   return (
@@ -21,36 +25,38 @@ export function Architecture() {
     >
       <ul className="stagger grid gap-6 md:grid-cols-2">
         {ARCHITECTURE_PILLARS.map((pillar) => (
-          <li key={pillar.title} className="reveal surface-interactive tilt p-5 lg:p-6">
-            <div className="flex items-start gap-4">
-              <span
-                aria-hidden="true"
-                className="grid size-10 shrink-0 place-items-center rounded-xl"
-                style={{
-                  color: pillar.color,
-                  backgroundColor: `color-mix(in oklab, ${pillar.color} 14%, transparent)`,
-                }}
-              >
-                <pillar.icon size={18} />
-              </span>
+          <li key={pillar.title} className="reveal-depth">
+            <div className="surface-interactive tilt h-full p-5 lg:p-6">
+              <div className="flex items-start gap-4">
+                <span
+                  aria-hidden="true"
+                  className="grid size-10 shrink-0 place-items-center rounded-xl"
+                  style={{
+                    color: pillar.color,
+                    backgroundColor: `color-mix(in oklab, ${pillar.color} 14%, transparent)`,
+                  }}
+                >
+                  <pillar.icon size={18} />
+                </span>
 
-              <div className="min-w-0">
-                <p className="eyebrow">{pillar.subtitle}</p>
-                <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
-                  {pillar.title}
-                </h3>
+                <div className="min-w-0">
+                  <p className="eyebrow">{pillar.subtitle}</p>
+                  <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
+                    {pillar.title}
+                  </h3>
+                </div>
               </div>
+
+              <p className="mt-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                {pillar.description}
+              </p>
+
+              <ul className="mt-6 flex flex-wrap gap-1.5">
+                {pillar.tags.map((tag) => (
+                  <Tag key={tag} label={tag} />
+                ))}
+              </ul>
             </div>
-
-            <p className="mt-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              {pillar.description}
-            </p>
-
-            <ul className="mt-6 flex flex-wrap gap-1.5">
-              {pillar.tags.map((tag) => (
-                <Tag key={tag} label={tag} />
-              ))}
-            </ul>
           </li>
         ))}
       </ul>

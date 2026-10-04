@@ -143,7 +143,7 @@ export function Hero() {
       {/* Only figures that can be counted straight off the resume. */}
       <ul className="stagger mx-auto mt-14 grid w-full max-w-6xl grid-cols-2 gap-x-8 sm:mt-16 sm:grid-cols-4">
         {STATS.map((stat, position) => (
-          <li key={stat.label} className="reveal hairline border-t pt-5">
+          <li key={stat.label} className="reveal-depth hairline border-t pt-5">
             <p className="font-mono text-2xl font-semibold text-slate-900 tabular-nums dark:text-white">
               <StatValue value={stat.value} position={position + 1} />
             </p>

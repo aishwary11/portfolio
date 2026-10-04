@@ -8,6 +8,10 @@ import { SKILL_CATEGORIES, SKILL_COUNT } from '@/data/skills';
  * Rendered in full rather than behind filter tabs: fourteen categories is a
  * quantity a reader can scan faster than they can operate a filter, and it keeps
  * every skill in the page for search engines and for Ctrl+F.
+ *
+ * The reveal and the tilt live on separate elements on purpose: the reveal is a
+ * scroll-driven animation, and animation declarations outrank normal ones, so a
+ * hover transform on the same element would never apply.
  */
 export function Skills() {
   return (
@@ -20,30 +24,29 @@ export function Skills() {
     >
       <ul className="stagger grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {SKILL_CATEGORIES.map((category) => (
-          <li
-            key={category.category}
-            className="reveal surface-interactive tilt flex flex-col p-5 lg:p-6"
-          >
-            <div className="hairline flex items-center gap-3 border-b pb-5">
-              <span
-                aria-hidden="true"
-                className="grid size-8 shrink-0 place-items-center rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-300"
-              >
-                <category.icon size={15} />
-              </span>
-              <h3 className="min-w-0 flex-1 text-sm font-semibold tracking-tight text-slate-900 dark:text-white">
-                {category.category}
-              </h3>
-              <span className="meta shrink-0 tabular-nums">
-                {String(category.items.length).padStart(2, '0')}
-              </span>
-            </div>
+          <li key={category.category} className="reveal-depth">
+            <div className="surface-interactive tilt flex h-full flex-col p-5 lg:p-6">
+              <div className="hairline flex items-center gap-3 border-b pb-5">
+                <span
+                  aria-hidden="true"
+                  className="grid size-8 shrink-0 place-items-center rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-300"
+                >
+                  <category.icon size={15} />
+                </span>
+                <h3 className="min-w-0 flex-1 text-sm font-semibold tracking-tight text-slate-900 dark:text-white">
+                  {category.category}
+                </h3>
+                <span className="meta shrink-0 tabular-nums">
+                  {String(category.items.length).padStart(2, '0')}
+                </span>
+              </div>
 
-            <ul className="mt-5 flex flex-wrap gap-1.5">
-              {category.items.map((item) => (
-                <Tag key={item.name} label={item.name} icon={item.icon} color={item.color} />
-              ))}
-            </ul>
+              <ul className="mt-5 flex flex-wrap gap-1.5">
+                {category.items.map((item) => (
+                  <Tag key={item.name} label={item.name} icon={item.icon} color={item.color} />
+                ))}
+              </ul>
+            </div>
           </li>
         ))}
       </ul>

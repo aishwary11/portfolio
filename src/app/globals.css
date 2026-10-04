@@ -632,3 +632,106 @@ summary::-webkit-details-marker {
     scroll-behavior: auto !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   3D scroll choreography
+
+   The reveal gains a depth variant: instead of sliding up flat, a block
+   rotates into the plane of the page as it enters. Same native scroll
+   timeline as `.reveal` — no observers, no client components — and the
+   rotation stays at a few degrees, because this is reading material rather
+   than a showcase.
+   ───────────────────────────────────────────────────────────────────────── */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes reveal-depth {
+      from {
+        opacity: 0;
+        transform: perspective(1000px) translateY(1.75rem) rotateX(7deg);
+      }
+      to {
+        opacity: 1;
+        transform: perspective(1000px) translateY(0) rotateX(0deg);
+      }
+    }
+
+    .reveal-depth {
+      /* Hinged on the block's own middle so tall cards do not swing from the
+         top edge. */
+      transform-origin: 50% 50%;
+      animation: reveal-depth linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+
+    @supports (margin: calc(sibling-index() * 1px)) {
+      .stagger > .reveal-depth {
+        animation-range: entry calc(sibling-index() * 5%) entry calc(52% + sibling-index() * 5%);
+      }
+    }
+
+    /* The career spine draws itself as each entry comes into view. */
+    @keyframes spine-grow {
+      from {
+        transform: scaleY(0);
+      }
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    .log-entry:not(:last-child)::before {
+      transform-origin: 50% 0;
+      animation: spine-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 15% cover 40%;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Topology graph — one-shot assembly
+
+   The canvas only mounts once the section is near the viewport, so this reads
+   as the system assembling: edges draw in along their true lengths (passed in
+   as `--edge-length` from the settled coordinates), then the nodes pop. Both
+   are one-shot; nothing keeps running afterwards.
+   ───────────────────────────────────────────────────────────────────────── */
+@keyframes edge-draw {
+  from {
+    stroke-dashoffset: var(--edge-length);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes node-pop {
+  from {
+    transform: scale(0.55);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.graph-edge {
+  stroke-dasharray: var(--edge-length);
+  stroke-dashoffset: 0;
+  animation: edge-draw 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--edge-delay, 0ms);
+}
+
+.graph-node {
+  animation: node-pop 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--node-delay, 0ms);
+}
+
+/* Entry motion is decoration; reduced motion gets the finished graph, not a
+   half-drawn one caught mid-delay. */
+@media (prefers-reduced-motion: reduce) {
+  .graph-edge,
+  .graph-node {
+    animation: none;
+  }
+}
